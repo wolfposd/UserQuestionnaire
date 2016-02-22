@@ -15,9 +15,9 @@ public class Setup
 
     public List<String> buttons;
 
-    public float timeforvote;
+    public long timeforvote;
 
-    public float additionalTimeForNotVoting;
+    public long additionalTimeForNotVoting;
 
     public Dimension windowsize;
 

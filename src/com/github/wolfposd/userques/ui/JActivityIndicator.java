@@ -1,4 +1,4 @@
-package com.github.wolfposd.userques;
+package com.github.wolfposd.userques.ui;
 
 /*
  The MIT License (MIT)

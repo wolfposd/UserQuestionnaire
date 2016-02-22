@@ -6,9 +6,9 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import com.github.wolfposd.userques.JActivityIndicator;
 import com.github.wolfposd.userques.items.Setup;
 import com.github.wolfposd.userques.ui.HTMLLabel;
+import com.github.wolfposd.userques.ui.JActivityIndicator;
 
 public class GreetingView
 {
@@ -38,7 +38,6 @@ public class GreetingView
         _frame.add(p1, BorderLayout.CENTER);
         _frame.add(panel, BorderLayout.SOUTH);
 
-        _frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         _frame.setSize(200, 200);
         _frame.setLocationRelativeTo(null);
     }
@@ -48,6 +47,7 @@ public class GreetingView
         _label.setText(setup.greetingtext);
         _frame.setTitle(setup.windowtitle);
         _frame.setSize(setup.windowsize);
+        _frame.setLocationRelativeTo(null);
     }
 
     public JActivityIndicator getActivityIndicator()

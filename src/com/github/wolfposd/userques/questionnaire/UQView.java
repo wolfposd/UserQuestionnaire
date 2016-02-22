@@ -20,6 +20,7 @@ public class UQView
     private List<JButton> _buttons = new ArrayList<JButton>();
 
     private ButtonActionListener _buttonActionListener;
+    private JPanel _buttonPanel;
 
     public UQView(final Setup setup)
     {
@@ -32,23 +33,23 @@ public class UQView
         _label.setFont(_label.getFont().deriveFont(20.0f));
         p1.add(_label);
 
-        JPanel panel = new JPanel();
+        _buttonPanel = new JPanel();
 
         for (int i = 0; i < setup.buttons.size(); i++)
         {
             final int index = i;
             String btText = setup.buttons.get(i);
             JButton button = new JButton(btText);
-            panel.add(button);
+            _buttonPanel.add(button);
             _buttons.add(button);
             button.addActionListener(e -> buttonClicked(index, e));
         }
 
         _frame.add(p1, BorderLayout.CENTER);
-        _frame.add(panel, BorderLayout.SOUTH);
+        _frame.add(_buttonPanel, BorderLayout.SOUTH);
 
         _frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        _frame.setSize(400, 150);
+        _frame.setSize(setup.windowsize);
         _frame.setLocationRelativeTo(null);
 
     }
@@ -85,7 +86,11 @@ public class UQView
 
     }
 
-    @FunctionalInterface
+    public JPanel getButtonPanel()
+    {
+        return _buttonPanel;
+    }
+
     public interface ButtonActionListener
     {
         public void buttonClicked(int index, ActionEvent action);
