@@ -2,9 +2,10 @@ package com.github.wolfposd.userques;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +38,7 @@ public class UQFileHandler
     {
         try
         {
-            Setup s = new Gson().fromJson(new FileReader("setup.json"), Setup.class);
+            Setup s = new Gson().fromJson(new InputStreamReader(new FileInputStream("setup.json"), "UTF-8"), Setup.class);
             return s;
         }
         catch (Exception e)
@@ -52,8 +53,7 @@ public class UQFileHandler
         List<String> words = new ArrayList<String>();
         try
         {
-            FileReader reader = new FileReader(new File("woerter.txt"));
-            BufferedReader bf = new BufferedReader(reader);
+            BufferedReader bf = new BufferedReader(new InputStreamReader(new FileInputStream("woerter.txt"), "UTF-8"));
             String line = null;
             while ((line = bf.readLine()) != null)
             {
@@ -61,7 +61,6 @@ public class UQFileHandler
             }
 
             bf.close();
-            reader.close();
         }
         catch (Exception e)
         {

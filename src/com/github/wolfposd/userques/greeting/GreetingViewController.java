@@ -26,8 +26,8 @@ public class GreetingViewController
 
         loadSetupWords();
 
-        _view.getActivityIndicator().stopRotating();
-        _view.getActivityIndicator().setVisible(false);
+        //_view.getActivityIndicator().stopRotating();
+        _view.removeActivityIndicator();
     }
 
     private void loadSetupWords()
@@ -45,7 +45,7 @@ public class GreetingViewController
         }
         try
         {
-            Thread.sleep(2000);
+            Thread.sleep(1000);
         }
         catch (InterruptedException e)
         {

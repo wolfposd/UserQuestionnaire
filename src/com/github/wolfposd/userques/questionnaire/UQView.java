@@ -1,6 +1,7 @@
 package com.github.wolfposd.userques.questionnaire;
 
 import java.awt.BorderLayout;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,8 +28,8 @@ public class UQView
         _frame = new JFrame(setup.windowtitle);
         _frame.setLayout(new BorderLayout());
 
-        JPanel p1 = new JPanel();
-
+        JPanel p1 = new JPanel(new GridBagLayout());
+        
         _label = new HTMLLabel(setup.greetingtext, true);
         _label.setFont(_label.getFont().deriveFont(20.0f));
         p1.add(_label);

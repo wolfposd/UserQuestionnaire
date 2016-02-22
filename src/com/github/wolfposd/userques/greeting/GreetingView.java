@@ -1,6 +1,7 @@
 package com.github.wolfposd.userques.greeting;
 
 import java.awt.BorderLayout;
+import java.awt.GridBagLayout;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -22,13 +23,13 @@ public class GreetingView
         _frame = new JFrame("");
         _frame.setLayout(new BorderLayout());
 
-        JPanel p1 = new JPanel();
+        JPanel p1 = new JPanel(new GridBagLayout());
 
         _activity = new JActivityIndicator(JActivityIndicator.CIRCLE_LIGHT_GREY);
         _label = new HTMLLabel("", true);
         _label.setFont(_label.getFont().deriveFont(20.0f));
-        p1.add(_label);
-        p1.add(_activity);
+        p1.add(_label);//, new GridBagConstraints(0, 0, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0,10,0,10), 0, 0));
+        p1.add(_activity);//,new GridBagConstraints(1, 0, 1, 1, 1, 1, GridBagConstraints.CENTER, GridBagConstraints.BOTH, new Insets(0,0,0,0), 0, 0));
 
         JPanel panel = new JPanel();
 
@@ -48,6 +49,13 @@ public class GreetingView
         _frame.setTitle(setup.windowtitle);
         _frame.setSize(setup.windowsize);
         _frame.setLocationRelativeTo(null);
+    }
+    
+    public void removeActivityIndicator()
+    {
+        JPanel parent = (JPanel)_activity.getParent();
+        parent.remove(_activity);
+       // parent.revalidate();
     }
 
     public JActivityIndicator getActivityIndicator()

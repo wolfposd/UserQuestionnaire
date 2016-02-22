@@ -3,10 +3,10 @@
   "finishtext": "Thank You",
   "greetingtext": "Welcome",
   "buttons": ["Yes", "No", "Maybe"],
-  "timeforvote": 20000,
+  "timeforvote": 5000,
   "additionalTimeForNotVoting": 2000,
   "windowsize": {
-    "width": 400,
-    "height": 200
+    "width": 500,
+    "height": 300
   }
 }
