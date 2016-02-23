@@ -6,6 +6,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import javax.swing.JButton;
+import javax.swing.SwingUtilities;
 
 import com.github.wolfposd.userques.UQFileHandler;
 import com.github.wolfposd.userques.items.Setup;
@@ -38,11 +39,13 @@ public class UQViewController implements ButtonActionListener
     @Override
     public void buttonClicked(int buttonindex, ActionEvent action)
     {
+        System.out.println("timer cancelled");
         _timer.cancel();
 
-        writeCurrentWordAndTimeToFile(buttonindex);
+        long timediff = writeCurrentWordAndTimeToFile(buttonindex);
 
-        setupForNextWord();
+        System.out.println("Waiting for: " + (_setup.timeforvote - timediff));
+        displayEmptyStringForTimeAndPresentNext(_setup.timeforvote - timediff);
     }
 
     private void startTimer()
@@ -63,24 +66,44 @@ public class UQViewController implements ButtonActionListener
         System.out.println("TIME RAN OUT");
         writeCurrentWordAndTimeToFile(-1);
 
+        displayEmptyStringForTimeAndPresentNext(_setup.additionalTimeForNotVoting);
+    }
+
+    private void displayEmptyStringForTimeAndPresentNext(final long time)
+    {
         _view.performOnAllButtons(button -> button.setEnabled(false));
         _view.setCenterString("");
 
-        sleep(_setup.additionalTimeForNotVoting);
+        new Thread(() -> {
+            // dont block UI-Thread
+                sleep(time);
+                try
+                {
+                    SwingUtilities.invokeAndWait(() -> {
+                        // Back on UI-Thread
+                            setupForNextWord();
+                            _view.performOnAllButtons(button -> button.setEnabled(true));
+                        });
+                }
+                catch (Exception e)
+                {
+                    e.printStackTrace();
+                }
+            }).start();
 
-        setupForNextWord();
-        _view.performOnAllButtons(button -> button.setEnabled(true));
     }
 
-    private void writeCurrentWordAndTimeToFile(int buttonindex)
+    private long writeCurrentWordAndTimeToFile(int buttonindex)
     {
         long timeDiff = System.currentTimeMillis() - _timeSinceLastClick;
         String buttonText = buttonindex < 0 ? "NOSELECTION" : _setup.buttons.get(buttonindex);
         UQFileHandler.appendString(_words.get(0) + ";" + buttonText + ";" + timeDiff);
+        return timeDiff;
     }
 
     private void setupForNextWord()
     {
+        System.out.println("setting up next word");
         _words.remove(0);
         if (_words.size() > 0)
         {
@@ -114,6 +137,7 @@ public class UQViewController implements ButtonActionListener
     {
         try
         {
+            System.out.println("SLEEPING " + ms);
             Thread.sleep(ms);
         }
         catch (InterruptedException e)
